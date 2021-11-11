@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics
+from rest_framework import generics, authentication, permissions
 from .models import PQR, Soporte
 from .serializers import SoporteSerializer, PQRSerializer
 
@@ -7,6 +7,8 @@ from .serializers import SoporteSerializer, PQRSerializer
 class SoporteListCreate(generics.ListCreateAPIView):
     queryset = Soporte.objects.all()
     serializer_class = SoporteSerializer
+    authentication_classes = [authentication.TokenAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class SoporteUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
