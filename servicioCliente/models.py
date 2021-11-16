@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models.fields.related import ForeignKey
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Soporte(models.Model):
@@ -15,3 +15,8 @@ class PQR(models.Model):
     tipo = models.CharField(max_length=32)
     info = 	models.TextField()
     created = models.DateField()
+
+class Bank(models.Model):
+    name = models.CharField(max_length=64)
+    address = models.CharField(max_length=64, blank=True, null=True)
+    users = models.ManyToManyField(User)

@@ -1,7 +1,7 @@
-from django.shortcuts import render
-from rest_framework import generics, authentication, permissions
-from .models import PQR, Soporte
-from .serializers import SoporteSerializer, PQRSerializer
+from rest_framework import generics, authentication, permissions, views, status
+from .models import PQR, Soporte, Bank, User
+from .serializers import BankSerializer, SoporteSerializer, PQRSerializer
+from rest_framework.response import Response
 
 # Create your views here.
 class SoporteListCreate(generics.ListCreateAPIView):
@@ -24,3 +24,18 @@ class PQRListCreate(generics.ListCreateAPIView):
 class PQRUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     queryset = PQR.objects.all()
     serializer_class = PQRSerializer
+
+
+class BankListCreate(generics.ListCreateAPIView):
+    queryset = Bank.objects.all()
+    serializer_class = BankSerializer
+
+
+class CountUser(views.APIView):
+    def get(self, request):
+        queryset = User.objects.all()
+        count_users = len(queryset)
+        data = {"Number of users": count_users}
+        return Response(data=data, status=status.HTTP_200_OK)
+
+
